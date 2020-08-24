@@ -23,7 +23,10 @@ const User = db.define('users', {
     },
     password: {
         type: Sequelize.STRING(200),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            is: /^[0-9a-z]{64}$/i
+        }
     },
     address: {
         type: Sequelize.STRING(200),

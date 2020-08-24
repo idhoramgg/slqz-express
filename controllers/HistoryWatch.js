@@ -1,30 +1,27 @@
 const HistoryWatch = require('../models/HistoryWatch')
 const User = require('../models/User');
-const Movies = require('../models/User');
-const Subscription = require('../models/User');
-
+const Movies = require('../models/Movies');
+const Subscription = require('../models/Subscription');
 
 module.exports = {
     // fungsi CRUD
-    getAll: (req, res) => {
-        HistoryWatch.findAll({
-            include: User, Movies, Subscription,
+    getAll: async (req, res) => {
+        const result = await HistoryWatch.findAll({
+            include: [User, Movies, Subscription],
             raw: true
         })
-        .then(result => {
+        
+        if(result) {
             res.send({
-                message: 'Get All data',
-                status: 200,
+                message: 'scs',
                 result
             })
-        })
-        .catch(error => {
-            console.log(error)
+        }
+        else {
             res.send({
-                message: 'internal server error',
-                status: 500,
+                message: 'error'
             })
-        })
+        }
     },
     createHistory: (req, res) => {
         HistoryWatch.create(req.body)
@@ -40,6 +37,32 @@ module.exports = {
             res.send({
                 message: "Internal server error",
                 status: 500
+            })
+        })
+    },
+    getOne : (req, res) => {
+        HistoryWatch.findOne({
+            include: [User, Movies, Subscription], 
+            where: {
+                id_history:req.params.id
+            }
+        }).then(result => {
+            if(result !== null) {
+                res.send({
+                    message: 'get one data',
+                    status: 200,
+                    result
+                })
+            } else {
+                res.send({
+                    message: `User dengan ID ${req.params.id} tidak ditemukan`,
+                })
+            }
+           
+        }).catch(error => {
+            console.log(error);
+            res.send({
+                message: 'error',
             })
         })
     }

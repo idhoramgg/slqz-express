@@ -16,7 +16,7 @@ const Subscription = db.define('subscription', {
         defaultValue: true
     }
 });
-User.hasMany(Subscription, {
+User.hasOne(Subscription, {
     foreignKey: 'id_user'
 });
 Subscription.belongsTo(User, {

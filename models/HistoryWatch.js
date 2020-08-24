@@ -16,22 +16,22 @@ const HistoryWatch = db.define('history_watch', {
 User.hasMany(HistoryWatch, {
     foreignKey: 'id_user'
 });
-Movies.hasMany(HistoryWatch, {
-    foreignKey: 'id_movie'
-});
-Subscription.hasMany(HistoryWatch, {
-    foreignKey: 'id_subscription'
-});
-
-// ------------------------------------ //
-
 HistoryWatch.belongsTo(User, {
     foreignKey: 'id_user',
     constraints: false
 });
+
+
+Movies.hasMany(HistoryWatch, {
+    foreignKey: 'id_movie'
+});
 HistoryWatch.belongsTo(Movies, {
     foreignKey: 'id_movie',
     constraints: false
+});
+
+Subscription.hasMany(HistoryWatch, {
+    foreignKey: 'id_subscription'
 });
 HistoryWatch.belongsTo(Subscription, {
     foreignKey: 'id_subscription',
